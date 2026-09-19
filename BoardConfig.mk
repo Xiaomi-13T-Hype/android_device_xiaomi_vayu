@@ -17,10 +17,12 @@ TARGET_OTA_ASSERT_DEVICE := vayu,msmnile
 TARGET_SCREEN_DENSITY := 440
 
 # Kernel
-TARGET_PREBUILT_KERNEL := $(DEVICE_PATH)/prebuilt/extracted/kernel
 BOARD_KERNEL_IMAGE_NAME := Image
-BOARD_PREBUILT_DTBIMAGE_DIR := $(DEVICE_PATH)/prebuilt/dtb
-TARGET_FORCE_PREBUILT_KERNEL := true
+TARGET_KERNEL_CONFIG := vendor/xiaomi/vayu-perf_defconfig
+TARGET_KERNEL_CLANG_VERSION := r547379
+TARGET_KERNEL_ADDITIONAL_FLAGS := LLVM_IAS=1 DTC_EXT=$(shell pwd)/prebuilts/kernel-build-tools/linux-x86/bin/dtc DTC=$(shell pwd)/prebuilts/kernel-build-tools/linux-x86/bin/dtc KBUILD_BUILD_USER="rohmanurip" KBUILD_BUILD_HOST="Github"
+TARGET_KERNEL_DTB := dtbs
+TARGET_DTB_LIST_WILDCARD := qcom/sm8150-xiaomi qcom/sm8150-v2-xiaomi qcom/sm8150p-xiaomi qcom/sm8150p-v2-xiaomi
 BOARD_PREBUILT_DTBOIMAGE := $(DEVICE_PATH)/prebuilt/dtbo.img
 BOARD_INCLUDE_RECOVERY_DTBO := false
 BOARD_KERNEL_SEPARATED_DTBO := false
