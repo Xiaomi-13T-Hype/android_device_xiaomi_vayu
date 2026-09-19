@@ -1,10 +1,9 @@
 # === Lunaris flags ===
-LUNARIS_BUILD_TYPE := Community
-WITH_GMS := false
+LUNARIS_BUILD_TYPE := GMS-Community
+WITH_GMS := true
 TARGET_OPTIMIZED_DEXOPT := true
 TARGET_BOOT_ANIMATION_RES := 1080
 USE_REALITY_ENGINE := true
-# TARGET_CUSTOM_UDFPS := true   # НЕ для vayu: сканер боковой, не подэкранный
 
 #
 # Copyright (C) 2021 The LineageOS Project
