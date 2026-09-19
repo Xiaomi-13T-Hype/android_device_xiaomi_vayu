@@ -1,12 +1,33 @@
-# Audio hardware
-ro.hardware.audio.primary=vayu
+# Device name
+ro.product.marketname=Poco X3 Pro
+
+# Audio
+vendor.audio.feature.dsm_feedback.enable=true
+vendor.audio.feature.dynamic_ecns.enable=true
+vendor.audio.feature.spkr_prot.enable=true
+
+# Camera
+persist.vendor.camera.display.lmax=1280x720
+persist.vendor.camera.display.umax=1920x1080
+persist.vendor.camera.privapp.list=*
+vendor.camera.aux.packagelist=*
 
 # Display
+debug.sf.frame_rate_multiple_threshold=120
 ro.surface_flinger.use_content_detection_for_refresh_rate=true
 ro.surface_flinger.set_display_power_timer_ms=1000
 ro.surface_flinger.set_idle_timer_ms=80
 ro.surface_flinger.set_touch_timer_ms=200
+vendor.display.enable_roundedcorner=1
+vendor.display.disable_excl_rect_partial_fb=1
 
 # Fingerprint
-persist.vendor.fingerprint.sensor_location=1080|910|115|local:4630946480857061761,1080|910|115|local:4630946545580055169
 persist.vendor.fingerprint.type=side
+persist.vendor.fingerprint.sensor_location=1080|910|115|local:4630946480857061761,1080|910|115|local:4630946545580055169
+persist.vendor.qfp.enable_fg=1
+
+# USB
+ro.usb.uvc.enabled=true
+sys.usb.mtp.batchcancel=1
+vendor.usb.controller=a600000.dwc3
+

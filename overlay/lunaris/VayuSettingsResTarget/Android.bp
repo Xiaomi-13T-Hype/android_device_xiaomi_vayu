@@ -1,0 +1,4 @@
+runtime_resource_overlay {
+    name: "VayuSettingsResTarget",
+    device_specific: true,
+}

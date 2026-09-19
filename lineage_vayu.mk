@@ -1,3 +1,11 @@
+# === Lunaris flags ===
+LUNARIS_BUILD_TYPE := Community
+WITH_GMS := false
+TARGET_OPTIMIZED_DEXOPT := true
+TARGET_BOOT_ANIMATION_RES := 1080
+USE_REALITY_ENGINE := true
+# TARGET_CUSTOM_UDFPS := true   # НЕ для vayu: сканер боковой, не подэкранный
+
 #
 # Copyright (C) 2021 The LineageOS Project
 #
@@ -25,3 +33,10 @@ PRODUCT_GMS_CLIENTID_BASE := android-xiaomi
 PRODUCT_BUILD_PROP_OVERRIDES += \
     BuildDesc="vayu_global-user 13 RKQ1.200826.002 V14.0.3.0.TJUMIXM release-keys" \
     BuildFingerprint=Xiaomi/vayu_global/vayu:13/RKQ1.200826.002/V14.0.3.0.TJUMIXM:user/release-keys
+
+# Lunaris About overlay
+PRODUCT_PACKAGES += VayuSettingsResTarget
+
+# Kernel is 4.14 fork without upstream 5.x mm features (HAVE_MOVE_PMD/PUD)
+# required by VINTF FCM level 6; disable strict kernel VINTF enforcement.
+PRODUCT_OTA_ENFORCE_VINTF_KERNEL_REQUIREMENTS := false

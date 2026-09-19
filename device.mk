@@ -58,4 +58,25 @@ PRODUCT_SOONG_NAMESPACES += \
     $(LOCAL_PATH)
 
 # Inherit from vendor blobs
+
+#Maintainer
+PRODUCT_PROPERTY_OVERRIDES += \
+    ro.lunaris.maintainer=Xiaomi-13T-Hype | モトテーパー
+
+
+# SELinux policies for vayu
+
+# Fingerprint vayu: only Xiaomi AIDL service (hardware/xiaomi)
+PRODUCT_PACKAGES += \
+    android.hardware.biometrics.fingerprint-service.xiaomi
+
+PRODUCT_PACKAGES_REMOVE += \
+    android.hardware.biometrics.fingerprint-service.default \
+    android.hardware.biometrics.fingerprint-service.lineage \
+    android.hardware.biometrics.fingerprint@2.0-service \
+    android.hardware.biometrics.fingerprint@2.1-service \
+    android.hardware.biometrics.fingerprint@2.2-service.example \
+    android.hardware.biometrics.fingerprint@2.3-service.xiaomi
+
+# Proprietary vendor blobs
 $(call inherit-product, vendor/xiaomi/vayu/vayu-vendor.mk)
