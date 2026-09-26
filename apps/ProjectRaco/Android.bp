@@ -1,0 +1,10 @@
+android_app_import {
+    name: "ProjectRaco",
+    apk: "ProjectRaco.apk",
+    preprocessed: true,
+    presigned: true,
+    dex_preopt: {
+        enabled: false,
+    },
+    product_specific: true,
+}

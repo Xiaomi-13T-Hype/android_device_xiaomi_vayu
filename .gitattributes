@@ -1,0 +1,2 @@
+prebuilt/*.img filter=lfs diff=lfs merge=lfs -text
+leica-camera/*.apk filter=lfs diff=lfs merge=lfs -text

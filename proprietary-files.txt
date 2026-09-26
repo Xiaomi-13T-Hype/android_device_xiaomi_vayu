@@ -297,6 +297,8 @@ vendor/firmware/a640_zap.b01
 vendor/firmware/a640_zap.b02
 vendor/firmware/a640_zap.elf
 vendor/firmware/a640_zap.mdt
+vendor/firmware/a650_gmu.bin
+vendor/firmware/a650_sqe.fw
 
 # IPA firmware
 vendor/etc/init/ipa_fws.rc

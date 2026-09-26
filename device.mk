@@ -24,7 +24,15 @@ TARGET_SCREEN_WIDTH := 1080
 
 # Camera
 PRODUCT_PACKAGES += \
-    libpiex_shim
+    libpiex_shim \
+    camera.device@1.0-impl \
+    camera.device@3.2-impl \
+    camera.device@3.3-impl \
+    camera.device@3.4-impl \
+    camera.device@3.4-external-impl \
+    camera.device@3.5-impl \
+    camera.device@3.5-external-impl \
+    camera.device@3.6-external-impl
 
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/camera/camera_cnf.txt:$(TARGET_COPY_OUT_VENDOR)/etc/camera/camera_cnf.txt
@@ -77,6 +85,26 @@ PRODUCT_PACKAGES_REMOVE += \
     android.hardware.biometrics.fingerprint@2.1-service \
     android.hardware.biometrics.fingerprint@2.2-service.example \
     android.hardware.biometrics.fingerprint@2.3-service.xiaomi
+
+# Prebuilt Applications (SukiSU Ultra & Project Raco)
+PRODUCT_PACKAGES += \
+    SukiSU \
+    ProjectRaco
+
+# SukiSU Ultra Native Libraries
+PRODUCT_COPY_FILES += \
+    $(call find-copy-subdir-files,*,$(LOCAL_PATH)/apps/SukiSU/lib,$(TARGET_COPY_OUT_PRODUCT)/app/SukiSU/lib)
+
+
+# Preinstalled KernelSU Modules (Project Raco & SUSFS)
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/preinstalled_modules/init.preinstalled_modules.sh:$(TARGET_COPY_OUT_PRODUCT)/bin/init.preinstalled_modules.sh \
+    $(LOCAL_PATH)/preinstalled_modules/init.preinstalled_modules.rc:$(TARGET_COPY_OUT_PRODUCT)/etc/init/init.preinstalled_modules.rc \
+    $(call find-copy-subdir-files,*,$(LOCAL_PATH)/preinstalled_modules/ProjectRaco,$(TARGET_COPY_OUT_PRODUCT)/etc/preinstalled_modules/ProjectRaco) \
+    $(call find-copy-subdir-files,*,$(LOCAL_PATH)/preinstalled_modules/susfs4ksu,$(TARGET_COPY_OUT_PRODUCT)/etc/preinstalled_modules/susfs4ksu)
+
+# Leica Camera Mod (Infinity-X)
+$(call inherit-product, $(LOCAL_PATH)/leica-camera/leica-camera.mk)
 
 # Proprietary vendor blobs
 $(call inherit-product, vendor/xiaomi/vayu/vayu-vendor.mk)

@@ -1,0 +1,13 @@
+service init_preinstalled_modules /product/bin/init.preinstalled_modules.sh
+    class late_start
+    user root
+    group root system
+    disabled
+    oneshot
+    seclabel u:r:init:s0
+
+on post-fs-data
+    start init_preinstalled_modules
+
+on property:sys.boot_completed=1
+    start init_preinstalled_modules

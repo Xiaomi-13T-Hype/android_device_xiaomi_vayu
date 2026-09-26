@@ -1,2 +1,190 @@
 soong_namespace {
 }
+
+cc_prebuilt_library_shared {
+    name: "camera.device@1.0-impl",
+    prefer: true,
+    proprietary: true,
+    compile_multilib: "both",
+    multilib: {
+        lib64: {
+            srcs: ["prebuilt/lib64/camera.device@1.0-impl.so"],
+        },
+        lib32: {
+            srcs: ["prebuilt/lib/camera.device@1.0-impl.so"],
+        },
+    },
+    check_elf_files: false,
+}
+
+cc_prebuilt_library_shared {
+    name: "camera.device@3.2-impl",
+    prefer: true,
+    proprietary: true,
+    compile_multilib: "both",
+    multilib: {
+        lib64: {
+            srcs: ["prebuilt/lib64/camera.device@3.2-impl.so"],
+        },
+        lib32: {
+            srcs: ["prebuilt/lib/camera.device@3.2-impl.so"],
+        },
+    },
+    check_elf_files: false,
+}
+
+cc_prebuilt_library_shared {
+    name: "camera.device@3.3-impl",
+    prefer: true,
+    proprietary: true,
+    compile_multilib: "both",
+    multilib: {
+        lib64: {
+            srcs: ["prebuilt/lib64/camera.device@3.3-impl.so"],
+        },
+        lib32: {
+            srcs: ["prebuilt/lib/camera.device@3.3-impl.so"],
+        },
+    },
+    check_elf_files: false,
+}
+
+cc_prebuilt_library_shared {
+    name: "camera.device@3.4-impl",
+    prefer: true,
+    proprietary: true,
+    compile_multilib: "both",
+    multilib: {
+        lib64: {
+            srcs: ["prebuilt/lib64/camera.device@3.4-impl.so"],
+        },
+        lib32: {
+            srcs: ["prebuilt/lib/camera.device@3.4-impl.so"],
+        },
+    },
+    check_elf_files: false,
+}
+
+cc_prebuilt_library_shared {
+    name: "camera.device@3.4-external-impl",
+    prefer: true,
+    proprietary: true,
+    compile_multilib: "both",
+    multilib: {
+        lib64: {
+            srcs: ["prebuilt/lib64/camera.device@3.4-external-impl.so"],
+        },
+        lib32: {
+            srcs: ["prebuilt/lib/camera.device@3.4-external-impl.so"],
+        },
+    },
+    check_elf_files: false,
+}
+
+cc_prebuilt_library_shared {
+    name: "camera.device@3.5-impl",
+    prefer: true,
+    proprietary: true,
+    compile_multilib: "both",
+    multilib: {
+        lib64: {
+            srcs: ["prebuilt/lib64/camera.device@3.5-impl.so"],
+        },
+        lib32: {
+            srcs: ["prebuilt/lib/camera.device@3.5-impl.so"],
+        },
+    },
+    check_elf_files: false,
+}
+
+cc_prebuilt_library_shared {
+    name: "camera.device@3.5-external-impl",
+    prefer: true,
+    proprietary: true,
+    compile_multilib: "both",
+    multilib: {
+        lib64: {
+            srcs: ["prebuilt/lib64/camera.device@3.5-external-impl.so"],
+        },
+        lib32: {
+            srcs: ["prebuilt/lib/camera.device@3.5-external-impl.so"],
+        },
+    },
+    check_elf_files: false,
+}
+
+cc_prebuilt_library_shared {
+    name: "camera.device@3.6-external-impl",
+    prefer: true,
+    proprietary: true,
+    compile_multilib: "both",
+    multilib: {
+        lib64: {
+            srcs: ["prebuilt/lib64/camera.device@3.6-external-impl.so"],
+        },
+        lib32: {
+            srcs: ["prebuilt/lib/camera.device@3.6-external-impl.so"],
+        },
+    },
+    check_elf_files: false,
+}
+
+cc_prebuilt_binary {
+    name: "android.hardware.camera.provider@2.4-service_64",
+    srcs: ["prebuilt/bin/hw/android.hardware.camera.provider@2.4-service_64"],
+    prefer: true,
+    relative_install_path: "hw",
+    proprietary: true,
+    compile_multilib: "64",
+    check_elf_files: false,
+}
+
+cc_prebuilt_library_shared {
+    name: "android.hardware.camera.provider@2.4-impl",
+    prefer: true,
+    relative_install_path: "hw",
+    proprietary: true,
+    compile_multilib: "both",
+    multilib: {
+        lib64: {
+            srcs: ["prebuilt/lib64/hw/android.hardware.camera.provider@2.4-impl.so"],
+        },
+        lib32: {
+            srcs: ["prebuilt/lib/hw/android.hardware.camera.provider@2.4-impl.so"],
+        },
+    },
+    check_elf_files: false,
+}
+
+cc_prebuilt_library_shared {
+    name: "android.hardware.camera.provider@2.4-legacy",
+    prefer: true,
+    proprietary: true,
+    compile_multilib: "both",
+    multilib: {
+        lib64: {
+            srcs: ["prebuilt/lib64/android.hardware.camera.provider@2.4-legacy.so"],
+        },
+        lib32: {
+            srcs: ["prebuilt/lib/android.hardware.camera.provider@2.4-legacy.so"],
+        },
+    },
+    check_elf_files: false,
+}
+
+cc_prebuilt_library_shared {
+    name: "android.hardware.camera.provider@2.4-external",
+    prefer: true,
+    proprietary: true,
+    compile_multilib: "both",
+    multilib: {
+        lib64: {
+            srcs: ["prebuilt/lib64/android.hardware.camera.provider@2.4-external.so"],
+        },
+        lib32: {
+            srcs: ["prebuilt/lib/android.hardware.camera.provider@2.4-external.so"],
+        },
+    },
+    check_elf_files: false,
+}
+

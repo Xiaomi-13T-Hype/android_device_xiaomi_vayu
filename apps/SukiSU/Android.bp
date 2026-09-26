@@ -1,0 +1,11 @@
+android_app_import {
+    name: "SukiSU",
+    apk: "SukiSU.apk",
+    preprocessed: true,
+    presigned: true,
+    skip_preprocessed_apk_checks: true,
+    dex_preopt: {
+        enabled: false,
+    },
+    product_specific: true,
+}
