@@ -20,7 +20,7 @@ TARGET_SCREEN_DENSITY := 440
 BOARD_KERNEL_IMAGE_NAME := Image
 TARGET_KERNEL_CONFIG := vendor/xiaomi/vayu-perf_defconfig
 TARGET_KERNEL_CLANG_VERSION := r547379
-TARGET_KERNEL_ADDITIONAL_FLAGS := LLVM_IAS=1 DTC_EXT=$(shell pwd)/prebuilts/kernel-build-tools/linux-x86/bin/dtc DTC=$(shell pwd)/prebuilts/kernel-build-tools/linux-x86/bin/dtc KBUILD_BUILD_USER="rohmanurip" KBUILD_BUILD_HOST="Github"
+TARGET_KERNEL_ADDITIONAL_FLAGS := LLVM_IAS=1 DTC_EXT=$(shell pwd)/prebuilts/kernel-build-tools/linux-x86/bin/dtc DTC=$(shell pwd)/prebuilts/kernel-build-tools/linux-x86/bin/dtc KBUILD_BUILD_USER="Xiaomi-13T-Hype" KBUILD_BUILD_HOST="モトテーパー"
 TARGET_KERNEL_DTB := dtbs
 TARGET_DTB_LIST_WILDCARD := qcom/sm8150-xiaomi qcom/sm8150-v2-xiaomi qcom/sm8150p-xiaomi qcom/sm8150p-v2-xiaomi
 BOARD_PREBUILT_DTBOIMAGE := $(DEVICE_PATH)/prebuilt/dtbo.img

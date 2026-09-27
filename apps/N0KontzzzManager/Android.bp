@@ -1,0 +1,30 @@
+android_app_import {
+    name: "N0KontzzzManager",
+    apk: "N0KontzzzManager.apk",
+    preprocessed: true,
+    presigned: true,
+    skip_preprocessed_apk_checks: true,
+    dex_preopt: {
+        enabled: false,
+    },
+    privileged: true,
+    product_specific: true,
+    required: [
+        "privapp-permissions-id.nkz.nokontzzzmanager.xml",
+        "default-permissions-id.nkz.nokontzzzmanager.xml",
+    ],
+}
+
+prebuilt_etc_xml {
+    name: "privapp-permissions-id.nkz.nokontzzzmanager.xml",
+    src: "privapp-permissions-id.nkz.nokontzzzmanager.xml",
+    sub_dir: "permissions",
+    product_specific: true,
+}
+
+prebuilt_etc_xml {
+    name: "default-permissions-id.nkz.nokontzzzmanager.xml",
+    src: "default-permissions-id.nkz.nokontzzzmanager.xml",
+    sub_dir: "default-permissions",
+    product_specific: true,
+}

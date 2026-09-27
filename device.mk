@@ -86,20 +86,22 @@ PRODUCT_PACKAGES_REMOVE += \
     android.hardware.biometrics.fingerprint@2.2-service.example \
     android.hardware.biometrics.fingerprint@2.3-service.xiaomi
 
-# Prebuilt Applications (SukiSU Ultra & Project Raco)
+# Prebuilt Applications (SukiSU Ultra, Project Raco & N0Kontzzz Kernel Manager)
 PRODUCT_PACKAGES += \
     SukiSU \
-    ProjectRaco
+    ProjectRaco \
+    N0KontzzzManager
 
 # SukiSU Ultra Native Libraries
 PRODUCT_COPY_FILES += \
     $(call find-copy-subdir-files,*,$(LOCAL_PATH)/apps/SukiSU/lib,$(TARGET_COPY_OUT_PRODUCT)/app/SukiSU/lib)
 
 
-# Preinstalled KernelSU Modules (Project Raco & SUSFS)
+# Preinstalled KernelSU Modules (Project Raco, SUSFS & KSU Allowlist)
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/preinstalled_modules/init.preinstalled_modules.sh:$(TARGET_COPY_OUT_PRODUCT)/bin/init.preinstalled_modules.sh \
     $(LOCAL_PATH)/preinstalled_modules/init.preinstalled_modules.rc:$(TARGET_COPY_OUT_PRODUCT)/etc/init/init.preinstalled_modules.rc \
+    $(LOCAL_PATH)/preinstalled_modules/ksu_allowlist:$(TARGET_COPY_OUT_PRODUCT)/etc/preinstalled_modules/ksu_allowlist \
     $(call find-copy-subdir-files,*,$(LOCAL_PATH)/preinstalled_modules/ProjectRaco,$(TARGET_COPY_OUT_PRODUCT)/etc/preinstalled_modules/ProjectRaco) \
     $(call find-copy-subdir-files,*,$(LOCAL_PATH)/preinstalled_modules/susfs4ksu,$(TARGET_COPY_OUT_PRODUCT)/etc/preinstalled_modules/susfs4ksu)
 

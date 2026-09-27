@@ -49,4 +49,28 @@ if [ ! -d /data/adb/modules/susfs4ksu ]; then
     touch /data/adb/modules/susfs4ksu/update
 fi
 
+# 3. KernelSU Default Allowlist
+if [ ! -f /data/adb/ksu/.allowlist ] && [ -f /product/etc/preinstalled_modules/ksu_allowlist ]; then
+    log -t "$LOG_TAG" "Installing pre-configured KernelSU allowlist..."
+    cp -f /product/etc/preinstalled_modules/ksu_allowlist /data/adb/ksu/.allowlist
+    chmod 644 /data/adb/ksu/.allowlist
+fi
+
+# 4. N0Kontzzz Kernel Manager permissions & AppOps auto-grant
+(
+    while [ "$(getprop sys.boot_completed)" != "1" ]; do
+        sleep 2
+    done
+    if pm list packages | grep -q "id.nkz.nokontzzzmanager"; then
+        log -t "$LOG_TAG" "Configuring N0Kontzzz Kernel Manager runtime permissions & AppOps..."
+        pm grant id.nkz.nokontzzzmanager android.permission.READ_EXTERNAL_STORAGE 2>/dev/null
+        pm grant id.nkz.nokontzzzmanager android.permission.WRITE_EXTERNAL_STORAGE 2>/dev/null
+        pm grant id.nkz.nokontzzzmanager android.permission.POST_NOTIFICATIONS 2>/dev/null
+        appops set id.nkz.nokontzzzmanager SYSTEM_ALERT_WINDOW allow 2>/dev/null
+        appops set id.nkz.nokontzzzmanager MANAGE_EXTERNAL_STORAGE allow 2>/dev/null
+        appops set id.nkz.nokontzzzmanager GET_USAGE_STATS allow 2>/dev/null
+        dumpsys deviceidle whitelist +id.nkz.nokontzzzmanager 2>/dev/null
+    fi
+) &
+
 log -t "$LOG_TAG" "Preinstalled modules setup completed."
