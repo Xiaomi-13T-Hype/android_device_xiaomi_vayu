@@ -3,7 +3,6 @@ android_app_import {
     apk: "N0KontzzzManager.apk",
     preprocessed: true,
     presigned: true,
-    skip_preprocessed_apk_checks: true,
     dex_preopt: {
         enabled: false,
     },
