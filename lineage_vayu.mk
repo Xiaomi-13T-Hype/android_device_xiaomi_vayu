@@ -1,6 +1,6 @@
 # === Lunaris flags ===
-LUNARIS_BUILD_TYPE := GMS-Community
-WITH_GMS := true
+LUNARIS_BUILD_TYPE := VANILLA-Community
+WITH_GMS := false
 TARGET_OPTIMIZED_DEXOPT := true
 TARGET_BOOT_ANIMATION_RES := 1080
 USE_REALITY_ENGINE := true
