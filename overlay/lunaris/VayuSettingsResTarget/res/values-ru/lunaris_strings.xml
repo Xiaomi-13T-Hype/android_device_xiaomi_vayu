@@ -2,8 +2,8 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="lunaris_device_message">POCO X3 Pro</string>
     <string name="lunaris_processor_code_message">Qualcomm® Snapdragon™ 860</string>
-    <string name="lunaris_battery_type_message">5160 mAh</string>
-    <string name="lunaris_screen_message">IPS LCD 120Hz</string>
+    <string name="lunaris_battery_type_message">5160 мА·ч</string>
+    <string name="lunaris_screen_message">IPS LCD 120 Гц</string>
 
     <!-- Cross Device Linking -->
     <string name="cross_device_linking_title">Связь с устройствами</string>
