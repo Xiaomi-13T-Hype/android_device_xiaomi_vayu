@@ -1,3 +1,10 @@
 
 # maintainer
 ro.lunaris.maintainer= Xiaomi-13T-Hype | モトテーパー 
+
+# Audio Volume Steps (100 steps = 1% precision)
+ro.config.media_vol_steps=100
+ro.config.alarm_vol_steps=100
+ro.config.system_vol_steps=100
+ro.config.ring_vol_steps=100
+ro.config.notif_vol_steps=100

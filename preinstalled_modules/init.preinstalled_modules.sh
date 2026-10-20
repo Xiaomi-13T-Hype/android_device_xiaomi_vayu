@@ -9,20 +9,51 @@ while [ ! -d /data/system ]; do
     sleep 2
 done
 
-# Ensure KernelSU folders exist
+# Ensure KernelSU folders and core binaries exist for sucompat
 mkdir -p /data/adb/modules
 mkdir -p /data/adb/ksu/bin
+mkdir -p /data/adb/ksu/lib
 chmod 755 /data/adb
 chmod 755 /data/adb/modules
 chmod 755 /data/adb/ksu
 chmod 755 /data/adb/ksu/bin
+chmod 755 /data/adb/ksu/lib
+
+# Deploy ksud binary for kernel sucompat (/data/adb/ksud)
+if [ ! -f /data/adb/ksud ]; then
+    log -t "$LOG_TAG" "Deploying ksud binary to /data/adb/ksud..."
+    if [ -f /product/bin/ksud ]; then
+        cp -f /product/bin/ksud /data/adb/ksud
+    elif [ -f /product/app/SukiSU/lib/arm64/libksud.so ]; then
+        cp -f /product/app/SukiSU/lib/arm64/libksud.so /data/adb/ksud
+    fi
+    chmod 0755 /data/adb/ksud
+    chown 0:0 /data/adb/ksud
+fi
+
+# Ensure ksud symlink in /data/adb/ksu/bin
+if [ ! -e /data/adb/ksu/bin/ksud ] && [ -f /data/adb/ksud ]; then
+    ln -sf /data/adb/ksud /data/adb/ksu/bin/ksud
+fi
+
+# Ensure libadbroot.so in /data/adb/ksu/lib/
+if [ ! -f /data/adb/ksu/lib/libadbroot.so ] && [ -f /product/app/SukiSU/lib/arm64/libadbroot.so ]; then
+    cp -f /product/app/SukiSU/lib/arm64/libadbroot.so /data/adb/ksu/lib/libadbroot.so
+    chmod 0755 /data/adb/ksu/lib/libadbroot.so
+    chown 0:0 /data/adb/ksu/lib/libadbroot.so
+fi
 
 # 1. Project Raco Module
 if [ ! -d /data/adb/modules/ProjectRaco ]; then
     log -t "$LOG_TAG" "Installing Project Raco module to /data/adb/modules/ProjectRaco..."
     cp -af /product/etc/preinstalled_modules/ProjectRaco /data/adb/modules/
     chmod -R 755 /data/adb/modules/ProjectRaco
-    touch /data/adb/modules/ProjectRaco/update
+    rm -f /data/adb/modules/ProjectRaco/disable
+else
+    # Keep service scripts updated from product
+    cp -f /product/etc/preinstalled_modules/ProjectRaco/service.sh /data/adb/modules/ProjectRaco/service.sh 2>/dev/null
+    cp -af /product/etc/preinstalled_modules/ProjectRaco/CoreSys /data/adb/modules/ProjectRaco/ 2>/dev/null
+    chmod -R 755 /data/adb/modules/ProjectRaco
 fi
 
 # Setup Project Raco persistent config
@@ -70,6 +101,16 @@ fi
         appops set id.nkz.nokontzzzmanager MANAGE_EXTERNAL_STORAGE allow 2>/dev/null
         appops set id.nkz.nokontzzzmanager GET_USAGE_STATS allow 2>/dev/null
         dumpsys deviceidle whitelist +id.nkz.nokontzzzmanager 2>/dev/null
+    fi
+
+    # 5. Direct Project Raco service launcher
+    if ! pgrep -f "raco_service" >/dev/null 2>&1; then
+        log -t "$LOG_TAG" "Starting Project Raco service..."
+        if [ -f /data/adb/modules/ProjectRaco/service.sh ]; then
+            sh /data/adb/modules/ProjectRaco/service.sh &
+        elif [ -f /product/etc/preinstalled_modules/ProjectRaco/service.sh ]; then
+            sh /product/etc/preinstalled_modules/ProjectRaco/service.sh &
+        fi
     fi
 ) &
 

@@ -395,4 +395,13 @@
     <!-- Radius of the software rounded corners at the bottom of the display in its natural
         orientation. If zero, the value of rounded_corner_radius is used. -->
     <dimen name="rounded_corner_radius_bottom">106px</dimen>
+
+    <!-- Package name of the system service that implements the shared connectivity service -->
+    <string translatable="false" name="config_sharedConnectivityServicePackage"></string>
+    <!-- Intent action used when binding to the shared connectivity service -->
+    <string translatable="false" name="config_sharedConnectivityServiceIntentAction"></string>
+
+    <!-- Audio stream volume steps (100 steps = 1% precision) -->
+    <integer name="config_audio_ring_vol_steps">100</integer>
+    <integer name="config_audio_notif_vol_steps">100</integer>
 </resources>

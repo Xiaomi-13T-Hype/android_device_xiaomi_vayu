@@ -4,6 +4,9 @@
 # SPDX-License-Identifier: Apache-2.0
 #
 
+DEVICE_PATH := device/xiaomi/vayu
+LOCAL_PATH := $(DEVICE_PATH)
+
 TARGET_HAS_FM := true
 TARGET_HAS_IR := true
 
@@ -92,18 +95,20 @@ PRODUCT_PACKAGES += \
     ProjectRaco \
     N0KontzzzManager
 
-# SukiSU Ultra Native Libraries
+# SukiSU Ultra Native Libraries & ksud daemon
 PRODUCT_COPY_FILES += \
-    $(call find-copy-subdir-files,*,$(LOCAL_PATH)/apps/SukiSU/lib,$(TARGET_COPY_OUT_PRODUCT)/app/SukiSU/lib)
-
+    $(DEVICE_PATH)/apps/SukiSU/lib/arm64/libadbroot.so:$(TARGET_COPY_OUT_PRODUCT)/app/SukiSU/lib/arm64/libadbroot.so \
+    $(DEVICE_PATH)/apps/SukiSU/lib/arm64/libkernelsu.so:$(TARGET_COPY_OUT_PRODUCT)/app/SukiSU/lib/arm64/libkernelsu.so \
+    $(DEVICE_PATH)/apps/SukiSU/lib/arm64/libksud.so:$(TARGET_COPY_OUT_PRODUCT)/app/SukiSU/lib/arm64/libksud.so \
+    $(DEVICE_PATH)/apps/SukiSU/lib/arm64/libksud.so:$(TARGET_COPY_OUT_PRODUCT)/bin/ksud
 
 # Preinstalled KernelSU Modules (Project Raco, SUSFS & KSU Allowlist)
 PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/preinstalled_modules/init.preinstalled_modules.sh:$(TARGET_COPY_OUT_PRODUCT)/bin/init.preinstalled_modules.sh \
-    $(LOCAL_PATH)/preinstalled_modules/init.preinstalled_modules.rc:$(TARGET_COPY_OUT_PRODUCT)/etc/init/init.preinstalled_modules.rc \
-    $(LOCAL_PATH)/preinstalled_modules/ksu_allowlist:$(TARGET_COPY_OUT_PRODUCT)/etc/preinstalled_modules/ksu_allowlist \
-    $(call find-copy-subdir-files,*,$(LOCAL_PATH)/preinstalled_modules/ProjectRaco,$(TARGET_COPY_OUT_PRODUCT)/etc/preinstalled_modules/ProjectRaco) \
-    $(call find-copy-subdir-files,*,$(LOCAL_PATH)/preinstalled_modules/susfs4ksu,$(TARGET_COPY_OUT_PRODUCT)/etc/preinstalled_modules/susfs4ksu)
+    $(DEVICE_PATH)/preinstalled_modules/init.preinstalled_modules.sh:$(TARGET_COPY_OUT_PRODUCT)/bin/init.preinstalled_modules.sh \
+    $(DEVICE_PATH)/preinstalled_modules/init.preinstalled_modules.rc:$(TARGET_COPY_OUT_PRODUCT)/etc/init/init.preinstalled_modules.rc \
+    $(DEVICE_PATH)/preinstalled_modules/ksu_allowlist:$(TARGET_COPY_OUT_PRODUCT)/etc/preinstalled_modules/ksu_allowlist \
+    $(call find-copy-subdir-files,*,$(DEVICE_PATH)/preinstalled_modules/ProjectRaco,$(TARGET_COPY_OUT_PRODUCT)/etc/preinstalled_modules/ProjectRaco) \
+    $(call find-copy-subdir-files,*,$(DEVICE_PATH)/preinstalled_modules/susfs4ksu,$(TARGET_COPY_OUT_PRODUCT)/etc/preinstalled_modules/susfs4ksu)
 
 # Leica Camera Mod (Infinity-X)
 $(call inherit-product, $(LOCAL_PATH)/leica-camera/leica-camera.mk)
