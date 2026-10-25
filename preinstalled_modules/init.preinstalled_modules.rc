@@ -4,7 +4,7 @@ service init_preinstalled_modules /product/bin/init.preinstalled_modules.sh
     group root system
     disabled
     oneshot
-    seclabel u:r:init:s0
+    seclabel u:r:su:s0
 
 on post-fs-data
     mkdir /data/adb 0755 root root
@@ -21,6 +21,7 @@ on post-fs-data
     copy /product/app/SukiSU/lib/arm64/libadbroot.so /data/adb/ksu/lib/libadbroot.so
     chmod 0755 /data/adb/ksu/lib/libadbroot.so
     chown root root /data/adb/ksu/lib/libadbroot.so
+    exec u:r:su:s0 root root -- /product/bin/init.preinstalled_modules.sh
     start init_preinstalled_modules
 
 on property:sys.boot_completed=1
