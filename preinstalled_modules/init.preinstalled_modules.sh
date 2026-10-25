@@ -1,13 +1,8 @@
 #!/system/bin/sh
 
-# Lunaris AOSP - Preinstalled Modules Setup (Project Raco & SUSFS)
+# Lunaris AOSP - Preinstalled Modules & Apps Setup (SukiSU, Project Raco & SUSFS)
 LOG_TAG="PreinstalledModules"
-log -t "$LOG_TAG" "Starting preinstalled modules check..."
-
-# Wait until /data is decrypted and accessible
-while [ ! -d /data/system ]; do
-    sleep 2
-done
+log -t "$LOG_TAG" "Starting preinstalled modules and binaries setup..."
 
 # Ensure KernelSU folders and core binaries exist for sucompat
 mkdir -p /data/adb/modules
@@ -19,25 +14,22 @@ chmod 755 /data/adb/ksu
 chmod 755 /data/adb/ksu/bin
 chmod 755 /data/adb/ksu/lib
 
-# Deploy ksud binary for kernel sucompat (/data/adb/ksud)
-if [ ! -f /data/adb/ksud ]; then
-    log -t "$LOG_TAG" "Deploying ksud binary to /data/adb/ksud..."
-    if [ -f /product/bin/ksud ]; then
-        cp -f /product/bin/ksud /data/adb/ksud
-    elif [ -f /product/app/SukiSU/lib/arm64/libksud.so ]; then
-        cp -f /product/app/SukiSU/lib/arm64/libksud.so /data/adb/ksud
-    fi
-    chmod 0755 /data/adb/ksud
-    chown 0:0 /data/adb/ksud
+# Deploy/update ksud binary for kernel sucompat (/data/adb/ksud)
+if [ -f /product/bin/ksud ]; then
+    cp -f /product/bin/ksud /data/adb/ksud
+elif [ -f /product/app/SukiSU/lib/arm64/libksud.so ]; then
+    cp -f /product/app/SukiSU/lib/arm64/libksud.so /data/adb/ksud
 fi
+chmod 0755 /data/adb/ksud
+chown 0:0 /data/adb/ksud
 
 # Ensure ksud symlink in /data/adb/ksu/bin
-if [ ! -e /data/adb/ksu/bin/ksud ] && [ -f /data/adb/ksud ]; then
+if [ -f /data/adb/ksud ]; then
     ln -sf /data/adb/ksud /data/adb/ksu/bin/ksud
 fi
 
 # Ensure libadbroot.so in /data/adb/ksu/lib/
-if [ ! -f /data/adb/ksu/lib/libadbroot.so ] && [ -f /product/app/SukiSU/lib/arm64/libadbroot.so ]; then
+if [ -f /product/app/SukiSU/lib/arm64/libadbroot.so ]; then
     cp -f /product/app/SukiSU/lib/arm64/libadbroot.so /data/adb/ksu/lib/libadbroot.so
     chmod 0755 /data/adb/ksu/lib/libadbroot.so
     chown 0:0 /data/adb/ksu/lib/libadbroot.so
@@ -78,6 +70,16 @@ if [ ! -d /data/adb/modules/susfs4ksu ]; then
     chmod 755 /data/adb/ksu/bin/ksu_susfs
     chmod 755 /data/adb/ksu/bin/sus_su
     touch /data/adb/modules/susfs4ksu/update
+else
+    # Update tools in /data/adb/ksu/bin
+    if [ -f /product/etc/preinstalled_modules/susfs4ksu/tools/ksu_susfs_arm64 ]; then
+        cp -f /product/etc/preinstalled_modules/susfs4ksu/tools/ksu_susfs_arm64 /data/adb/ksu/bin/ksu_susfs
+        chmod 755 /data/adb/ksu/bin/ksu_susfs
+    fi
+    if [ -f /product/etc/preinstalled_modules/susfs4ksu/tools/sus_su_arm64 ]; then
+        cp -f /product/etc/preinstalled_modules/susfs4ksu/tools/sus_su_arm64 /data/adb/ksu/bin/sus_su
+        chmod 755 /data/adb/ksu/bin/sus_su
+    fi
 fi
 
 # 3. KernelSU Default Allowlist
@@ -87,12 +89,35 @@ if [ ! -f /data/adb/ksu/.allowlist ] && [ -f /product/etc/preinstalled_modules/k
     chmod 644 /data/adb/ksu/.allowlist
 fi
 
-# 4. N0Kontzzz Kernel Manager permissions & AppOps auto-grant
+# 4. Background service for apps installation, permissions & service launch
 (
     while [ "$(getprop sys.boot_completed)" != "1" ]; do
         sleep 2
     done
-    if pm list packages | grep -q "id.nkz.nokontzzzmanager"; then
+
+    CURRENT_BUILD="$(getprop ro.build.date.utc)"
+    LAST_BUILD="$(cat /data/adb/.lunaris_build_date 2>/dev/null)"
+
+    # Guarantee preinstalled apps installation & update on OTA or new build
+    if [ "$CURRENT_BUILD" != "$LAST_BUILD" ] || ! pm list packages 2>/dev/null | grep -q "com.sukisu.ultra"; then
+        log -t "$LOG_TAG" "OTA or build update detected ($LAST_BUILD -> $CURRENT_BUILD). Forcing app sync..."
+        for apk in /product/app/SukiSU/SukiSU.apk /product/app/ProjectRaco/ProjectRaco.apk /product/app/N0KontzzzManager/N0KontzzzManager.apk; do
+            if [ -f "$apk" ]; then
+                log -t "$LOG_TAG" "Installing/updating $apk..."
+                pm install -r -d "$apk" 2>&1 | log -t "$LOG_TAG"
+            fi
+        done
+        echo "$CURRENT_BUILD" > /data/adb/.lunaris_build_date
+    fi
+
+    # Configure SukiSU notifications and doze exemption
+    if pm list packages 2>/dev/null | grep -q "com.sukisu.ultra"; then
+        appops set com.sukisu.ultra POST_NOTIFICATION allow 2>/dev/null
+        dumpsys deviceidle whitelist +com.sukisu.ultra 2>/dev/null
+    fi
+
+    # Configure N0Kontzzz Kernel Manager runtime permissions & AppOps
+    if pm list packages 2>/dev/null | grep -q "id.nkz.nokontzzzmanager"; then
         log -t "$LOG_TAG" "Configuring N0Kontzzz Kernel Manager runtime permissions & AppOps..."
         pm grant id.nkz.nokontzzzmanager android.permission.READ_EXTERNAL_STORAGE 2>/dev/null
         pm grant id.nkz.nokontzzzmanager android.permission.WRITE_EXTERNAL_STORAGE 2>/dev/null
@@ -103,7 +128,13 @@ fi
         dumpsys deviceidle whitelist +id.nkz.nokontzzzmanager 2>/dev/null
     fi
 
-    # 5. Direct Project Raco service launcher
+    # Configure Project Raco permissions
+    if pm list packages 2>/dev/null | grep -q "com.kanagawa.yamada.project.raco"; then
+        pm grant com.kanagawa.yamada.project.raco android.permission.POST_NOTIFICATIONS 2>/dev/null
+        dumpsys deviceidle whitelist +com.kanagawa.yamada.project.raco 2>/dev/null
+    fi
+
+    # Direct Project Raco service launcher
     if ! pgrep -f "raco_service" >/dev/null 2>&1; then
         log -t "$LOG_TAG" "Starting Project Raco service..."
         if [ -f /data/adb/modules/ProjectRaco/service.sh ]; then

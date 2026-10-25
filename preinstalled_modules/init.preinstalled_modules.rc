@@ -7,6 +7,20 @@ service init_preinstalled_modules /product/bin/init.preinstalled_modules.sh
     seclabel u:r:init:s0
 
 on post-fs-data
+    mkdir /data/adb 0755 root root
+    mkdir /data/adb/ksu 0755 root root
+    mkdir /data/adb/ksu/bin 0755 root root
+    mkdir /data/adb/ksu/lib 0755 root root
+    mkdir /data/adb/modules 0755 root root
+    copy /product/bin/ksud /data/adb/ksud
+    chmod 0755 /data/adb/ksud
+    chown root root /data/adb/ksud
+    copy /product/bin/ksud /data/adb/ksu/bin/ksud
+    chmod 0755 /data/adb/ksu/bin/ksud
+    chown root root /data/adb/ksu/bin/ksud
+    copy /product/app/SukiSU/lib/arm64/libadbroot.so /data/adb/ksu/lib/libadbroot.so
+    chmod 0755 /data/adb/ksu/lib/libadbroot.so
+    chown root root /data/adb/ksu/lib/libadbroot.so
     start init_preinstalled_modules
 
 on property:sys.boot_completed=1

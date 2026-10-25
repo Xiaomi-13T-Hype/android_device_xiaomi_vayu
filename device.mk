@@ -100,6 +100,8 @@ PRODUCT_COPY_FILES += \
     $(DEVICE_PATH)/apps/SukiSU/lib/arm64/libadbroot.so:$(TARGET_COPY_OUT_PRODUCT)/app/SukiSU/lib/arm64/libadbroot.so \
     $(DEVICE_PATH)/apps/SukiSU/lib/arm64/libkernelsu.so:$(TARGET_COPY_OUT_PRODUCT)/app/SukiSU/lib/arm64/libkernelsu.so \
     $(DEVICE_PATH)/apps/SukiSU/lib/arm64/libksud.so:$(TARGET_COPY_OUT_PRODUCT)/app/SukiSU/lib/arm64/libksud.so \
+    $(DEVICE_PATH)/apps/SukiSU/lib/arm64/librmmgusyxyyl.so:$(TARGET_COPY_OUT_PRODUCT)/app/SukiSU/lib/arm64/librmmgusyxyyl.so \
+    $(DEVICE_PATH)/apps/SukiSU/lib/arm64/libeexgslcpwg.so:$(TARGET_COPY_OUT_PRODUCT)/app/SukiSU/lib/arm64/libeexgslcpwg.so \
     $(DEVICE_PATH)/apps/SukiSU/lib/arm64/libksud.so:$(TARGET_COPY_OUT_PRODUCT)/bin/ksud
 
 # Preinstalled KernelSU Modules (Project Raco, SUSFS & KSU Allowlist)
